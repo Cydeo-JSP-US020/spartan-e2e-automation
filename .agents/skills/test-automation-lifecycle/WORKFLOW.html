@@ -1,0 +1,1436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Spartan Agentic Test Automation Lifecycle — Visual Interactive Architecture</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-dark: #0a0f1d;
+      --bg-card: rgba(16, 24, 40, 0.85);
+      --bg-card-hover: rgba(26, 38, 64, 0.95);
+      --bg-panel: rgba(12, 18, 32, 0.95);
+      --border-subtle: rgba(255, 255, 255, 0.08);
+      --border-focus: rgba(99, 102, 241, 0.5);
+      
+      --cyan-glow: #00f2fe;
+      --cyan-subtle: rgba(0, 242, 254, 0.15);
+      --purple-glow: #a855f7;
+      --purple-subtle: rgba(168, 85, 247, 0.15);
+      --emerald-glow: #10b981;
+      --emerald-subtle: rgba(16, 185, 129, 0.15);
+      --amber-glow: #f59e0b;
+      --amber-subtle: rgba(245, 158, 11, 0.15);
+      --rose-glow: #f43f5e;
+      --rose-subtle: rgba(244, 63, 94, 0.15);
+      --blue-glow: #38bdf8;
+      --blue-subtle: rgba(56, 189, 248, 0.15);
+
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-dim: #64748b;
+
+      --font-display: 'Outfit', sans-serif;
+      --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      --font-mono: 'Fira Code', monospace;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: radial-gradient(circle at 50% 0%, #151e36 0%, #0a0f1d 75%);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      padding-bottom: 80px;
+      overflow-x: hidden;
+    }
+
+    /* Top Navigation Bar */
+    .top-nav {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(10, 15, 29, 0.85);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 12px 32px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .brand-logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      text-decoration: none;
+      color: var(--text-main);
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    .brand-badge {
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.75rem;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      font-weight: 800;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 20px;
+    }
+
+    .nav-link {
+      color: var(--text-muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      font-weight: 500;
+      transition: all 0.2s ease;
+      padding: 6px 12px;
+      border-radius: 6px;
+    }
+
+    .nav-link:hover {
+      color: var(--cyan-glow);
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(16, 185, 129, 0.1);
+      border: 1px solid rgba(16, 185, 129, 0.3);
+      color: #34d399;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      background: #10b981;
+      border-radius: 50%;
+      box-shadow: 0 0 10px #10b981;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.85); }
+    }
+
+    /* Container */
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+      padding: 32px 24px;
+    }
+
+    /* Hero Section */
+    .hero {
+      text-align: center;
+      padding: 60px 0 40px;
+    }
+
+    .hero-pretitle {
+      color: var(--cyan-glow);
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .hero-title {
+      font-family: var(--font-display);
+      font-size: 3.2rem;
+      font-weight: 800;
+      letter-spacing: -1px;
+      line-height: 1.15;
+      background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #38bdf8 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 18px;
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      max-width: 850px;
+      margin: 0 auto 32px;
+    }
+
+    .tech-badges {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .tech-badge {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      padding: 6px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-main);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Section Headers */
+    .section-header {
+      margin: 60px 0 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-bottom: 1px solid var(--border-subtle);
+      padding-bottom: 16px;
+    }
+
+    .section-title {
+      font-family: var(--font-display);
+      font-size: 1.8rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-desc {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-top: 4px;
+    }
+
+    /* 9-Stage Interactive Pipeline Flowchart */
+    .pipeline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .stage-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 20px;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      backdrop-filter: blur(8px);
+    }
+
+    .stage-card:hover {
+      background: var(--bg-card-hover);
+      transform: translateY(-4px);
+      border-color: var(--border-focus);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+
+    .stage-card.active {
+      border-color: var(--cyan-glow);
+      background: rgba(14, 165, 233, 0.1);
+      box-shadow: 0 0 25px rgba(0, 242, 254, 0.2);
+    }
+
+    .stage-num {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--cyan-glow);
+      display: inline-block;
+      margin-bottom: 8px;
+    }
+
+    .stage-title {
+      font-size: 1.15rem;
+      font-weight: 700;
+      font-family: var(--font-display);
+      margin-bottom: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .stage-desc {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      line-height: 1.5;
+    }
+
+    .stage-tag {
+      font-size: 0.75rem;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: 600;
+      background: rgba(99, 102, 241, 0.15);
+      color: #818cf8;
+    }
+
+    /* Stage Detail Modal/Panel */
+    .stage-detail-panel {
+      margin-top: 24px;
+      background: var(--bg-panel);
+      border: 1px solid var(--cyan-glow);
+      border-radius: 12px;
+      padding: 28px;
+      display: none;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Sub-Agent Dossiers */
+    .agents-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .agent-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      transition: all 0.25s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .agent-card:hover {
+      border-color: var(--border-focus);
+      transform: translateY(-3px);
+    }
+
+    .agent-header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 16px;
+    }
+
+    .agent-icon {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+    }
+
+    .agent-planner { background: linear-gradient(135deg, #3b82f6, #06b6d4); }
+    .agent-explorer { background: linear-gradient(135deg, #10b981, #059669); }
+    .agent-generator { background: linear-gradient(135deg, #8b5cf6, #ec4899); }
+    .agent-healer { background: linear-gradient(135deg, #f59e0b, #ef4444); }
+
+    .agent-name {
+      font-family: var(--font-display);
+      font-size: 1.35rem;
+      font-weight: 700;
+    }
+
+    .agent-role {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .agent-body {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+      margin-bottom: 20px;
+    }
+
+    .agent-tools {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 20px;
+    }
+
+    .tool-chip {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.06);
+      color: #93c5fd;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .agent-btn {
+      width: 100%;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-main);
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .agent-btn:hover {
+      background: rgba(99, 102, 241, 0.2);
+      border-color: var(--cyan-glow);
+      color: white;
+    }
+
+    /* Jira / Azure DevOps MCP Simulator */
+    .mcp-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 24px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    @media (max-width: 900px) {
+      .mcp-container { grid-template-columns: 1fr; }
+    }
+
+    .mcp-box {
+      background: rgba(0, 0, 0, 0.25);
+      border: 1px solid var(--border-subtle);
+      border-radius: 10px;
+      padding: 20px;
+    }
+
+    .mcp-title {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      margin-bottom: 14px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .input-row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 16px;
+    }
+
+    .mcp-input {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid var(--border-subtle);
+      border-radius: 6px;
+      padding: 10px 14px;
+      color: white;
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+    }
+
+    .mcp-input:focus {
+      outline: none;
+      border-color: var(--cyan-glow);
+    }
+
+    .mcp-run-btn {
+      background: linear-gradient(135deg, #4f46e5, #06b6d4);
+      color: white;
+      border: none;
+      padding: 10px 18px;
+      border-radius: 6px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .mcp-run-btn:hover {
+      opacity: 0.9;
+      transform: scale(1.02);
+    }
+
+    .payload-display {
+      background: #050811;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: #38bdf8;
+      overflow-x: auto;
+      max-height: 280px;
+    }
+
+    /* 3-Tier Healing Simulator */
+    .healing-container {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 24px;
+    }
+
+    .tier-tabs {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .tier-tab {
+      flex: 1;
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 14px;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+
+    .tier-tab:hover {
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .tier-tab.active {
+      border-color: var(--cyan-glow);
+      background: rgba(14, 165, 233, 0.12);
+    }
+
+    .tier-name {
+      font-weight: 700;
+      font-size: 1rem;
+      margin-bottom: 4px;
+    }
+
+    .tier-badge {
+      font-size: 0.75rem;
+      font-weight: 600;
+      padding: 2px 8px;
+      border-radius: 4px;
+      display: inline-block;
+    }
+
+    .badge-healable { background: rgba(16, 185, 129, 0.2); color: #34d399; }
+    .badge-nonhealable { background: rgba(244, 63, 94, 0.2); color: #fb7185; }
+
+    .healing-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 10px;
+    }
+
+    @media (max-width: 900px) {
+      .healing-content { grid-template-columns: 1fr; }
+    }
+
+    .code-diff {
+      background: #040813;
+      border: 1px solid var(--border-subtle);
+      border-radius: 8px;
+      padding: 16px;
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      line-height: 1.6;
+      color: #cbd5e1;
+      overflow-x: auto;
+    }
+
+    .diff-add { color: #34d399; background: rgba(16, 185, 129, 0.1); display: block; }
+    .diff-del { color: #fb7185; background: rgba(244, 63, 94, 0.1); display: block; }
+
+    /* Interactive Terminal Simulator */
+    .terminal-window {
+      background: #050811;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.6);
+      margin-top: 24px;
+    }
+
+    .terminal-bar {
+      background: #111827;
+      padding: 10px 16px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      border-bottom: 1px solid var(--border-subtle);
+    }
+
+    .term-btn {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .term-close { background: #ef4444; }
+    .term-min { background: #f59e0b; }
+    .term-max { background: #10b981; }
+
+    .term-title {
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    .terminal-body {
+      padding: 24px;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      line-height: 1.6;
+      min-height: 320px;
+      max-height: 450px;
+      overflow-y: auto;
+      color: #94a3b8;
+    }
+
+    .term-prompt {
+      color: #38bdf8;
+      font-weight: 600;
+    }
+
+    .term-cmd {
+      color: #f8fafc;
+    }
+
+    .term-success { color: #34d399; }
+    .term-info { color: #60a5fa; }
+    .term-warn { color: #fbbf24; }
+    .term-fail { color: #f87171; }
+
+    /* Tables */
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 16px;
+      font-size: 0.9rem;
+    }
+
+    .custom-table th, .custom-table td {
+      padding: 12px 16px;
+      border-bottom: 1px solid var(--border-subtle);
+      text-align: left;
+    }
+
+    .custom-table th {
+      background: rgba(255, 255, 255, 0.03);
+      color: var(--cyan-glow);
+      font-family: var(--font-display);
+      font-weight: 600;
+    }
+
+    .custom-table tr:hover {
+      background: rgba(255, 255, 255, 0.02);
+    }
+
+    /* Modal for Agent Simulation */
+    .modal-backdrop {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+    }
+
+    .modal-content {
+      background: #0b1120;
+      border: 1px solid var(--cyan-glow);
+      border-radius: 14px;
+      max-width: 700px;
+      width: 90%;
+      max-height: 85vh;
+      overflow-y: auto;
+      padding: 28px;
+      position: relative;
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    .modal-close:hover { color: white; }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <nav class="top-nav">
+    <a href="#" class="brand-logo">
+      <span>🛡️ Spartan E2E</span>
+      <span class="brand-badge">Agentic v2.0</span>
+    </a>
+    <div class="nav-links">
+      <a href="#pipeline" class="nav-link">9-Stage Pipeline</a>
+      <a href="#agents" class="nav-link">4 Sub-Agents</a>
+      <a href="#mcp" class="nav-link">Jira & Azure MCP</a>
+      <a href="#healing" class="nav-link">3-Tier Healer</a>
+      <a href="#cli" class="nav-link">Live Terminal</a>
+    </div>
+    <div class="status-pill">
+      <span class="status-dot"></span>
+      Antigravity Orchestrator Ready
+    </div>
+  </nav>
+
+  <div class="container">
+    
+    <!-- Hero Banner -->
+    <header class="hero">
+      <div class="hero-pretitle">
+        <span>⚡</span> AUTONOMOUS TEST AUTOMATION LIFECYCLE
+      </div>
+      <h1 class="hero-title">Multi-Agent Quality Engineering Platform</h1>
+      <p class="hero-subtitle">
+        Transforming Jira & Azure DevOps user stories into verified, production-grade Playwright + TypeScript test suites through autonomous multi-agent orchestration.
+      </p>
+
+      <div class="tech-badges">
+        <span class="tech-badge">🎭 Playwright Test</span>
+        <span class="tech-badge">🔷 TypeScript 5.6</span>
+        <span class="tech-badge">🏗️ Page Object Model</span>
+        <span class="tech-badge">🌐 REST API Service Model</span>
+        <span class="tech-badge">🤖 Antigravity CLI</span>
+        <span class="tech-badge">🔗 Atlassian Jira MCP</span>
+        <span class="tech-badge">☁️ Azure DevOps MCP</span>
+        <span class="tech-badge">🎲 Faker Data Isolation</span>
+      </div>
+    </header>
+
+    <!-- Section 1: 9-Stage Pipeline -->
+    <section id="pipeline">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🔄 The 9-Stage Autonomous Pipeline</h2>
+          <p class="section-desc">Click any stage card to inspect inputs, agent handoffs, tools, and output artifacts.</p>
+        </div>
+      </div>
+
+      <div class="pipeline-grid">
+        <div class="stage-card active" onclick="showStage(1)">
+          <span class="stage-num">STAGE 01</span>
+          <div class="stage-title">Target Ingestion <span class="stage-tag">MCP</span></div>
+          <p class="stage-desc">Fetches Jira/Azure DevOps story narrative and parses all Acceptance Criteria.</p>
+        </div>
+
+        <div class="stage-card" onclick="showStage(2)">
+          <span class="stage-num">STAGE 02</span>
+          <div class="stage-title">Git Isolation <span class="stage-tag">Git CLI</span></div>
+          <p class="stage-desc">Switches to clean main and cuts feature/&lt;target&gt;-automation branch.</p>
+        </div>
+
+        <div class="stage-card" onclick="showStage(3)">
+          <span class="stage-num">STAGE 03</span>
+          <div class="stage-title">Planner Agent <span class="stage-tag">Agent</span></div>
+          <p class="stage-desc">Enforces 1-to-1 AC mapping, scope classification, and POM/API gap audit.</p>
+        </div>
+
+        <div class="stage-card" onclick="showStage(4)">
+          <span class="stage-num">STAGE 04</span>
+          <div class="stage-title">Explorer Agent <span class="stage-tag">Playwright</span></div>
+          <p class="stage-desc">Inspects live DOM accessibility tree, validates semantic locators & Swagger API.</p>
+        </div>
+
+        <div class="stage-card" onclick="showStage(5)">
+          <span class="stage-num">STAGE 05</span>
+          <div class="stage-title">Generator Agent <span class="stage-tag">Agent</span></div>
+          <p class="stage-desc">Synthesizes test specs, Page Objects, API services with web-first assertions.</p>
+        </div>
+
+        <div class="stage-card" onclick="showStage(6)">
+          <span class="stage-num">STAGE 06</span>
+          <div class="stage-title">Playwright Run <span class="stage-tag">Runner</span></div>
+          <p class="stage-desc">Executes npm run typecheck & npx playwright test across workers.</p>
+        </div>
+
+        <div class="stage-card" onclick="showStage(7)">
+          <span class="stage-num">STAGE 07</span>
+          <div class="stage-title">Healer Agent <span class="stage-tag">Autonomous</span></div>
+          <p class="stage-desc">Diagnoses failures using 3-tier taxonomy and autonomously patches code.</p>
+        </div>
+
+        <div class="stage-card" onclick="showStage(8)">
+          <span class="stage-num">STAGE 08</span>
+          <div class="stage-title">Ephemeral Cleanup <span class="stage-tag">Scratch</span></div>
+          <p class="stage-desc">Purges temporary files (.temp/) upon 100% test pass verification.</p>
+        </div>
+
+        <div class="stage-card" onclick="showStage(9)">
+          <span class="stage-num">STAGE 09</span>
+          <div class="stage-title">PR Summary & Creation <span class="stage-tag">GitHub MCP</span></div>
+          <p class="stage-desc">Drafts executive PR summary with AC checklist and opens GitHub PR.</p>
+        </div>
+      </div>
+
+      <div id="stage-detail-box" class="stage-detail-panel" style="display: block;">
+        <h3 id="detail-title" style="font-family: var(--font-display); font-size: 1.4rem; color: var(--cyan-glow); margin-bottom: 8px;">
+          Stage 1: Target Ingestion & Requirements Normalization
+        </h3>
+        <p id="detail-desc" style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.6; margin-bottom: 16px;">
+          The skill accepts a Jira issue key (e.g. <code>SPAR-101</code>) or Azure DevOps work item ID (e.g. <code>10423</code>). It calls the Atlassian MCP or Azure DevOps MCP to extract the user story summary, narrative, and individual acceptance criteria (ACs). If MCP servers are offline, it accepts raw AC text directly.
+        </p>
+        <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+          <div><strong style="color: #cbd5e1;">Tools Used:</strong> <code style="color: #38bdf8;">@modelcontextprotocol/server-atlassian</code>, <code style="color: #38bdf8;">server-azure-devops</code></div>
+          <div><strong style="color: #cbd5e1;">Output:</strong> <span style="color: #34d399;">Parsed User Story Metadata & AC List</span></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 2: The 4 Specialized Sub-Agents -->
+    <section id="agents">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🤖 The 4 Specialized Sub-Agents</h2>
+          <p class="section-desc">Each agent holds a dedicated role, toolset, and strict behavioral constraints.</p>
+        </div>
+      </div>
+
+      <div class="agents-grid">
+        <!-- Planner Agent -->
+        <div class="agent-card">
+          <div>
+            <div class="agent-header">
+              <div class="agent-icon agent-planner">📐</div>
+              <div>
+                <div class="agent-name">Planner Agent</div>
+                <div class="agent-role">Test Automation Architect</div>
+              </div>
+            </div>
+            <div class="agent-body">
+              Parses story requirements, determines layer scope (UI/API/Hybrid), enforces <strong>1-to-1 AC mapping</strong>, and audits existing Page Objects and API client services for gaps.
+            </div>
+            <div class="agent-tools">
+              <span class="tool-chip">atlassian-mcp</span>
+              <span class="tool-chip">azure-devops-mcp</span>
+              <span class="tool-chip">pom-gap-analyzer</span>
+              <span class="tool-chip">faker-strategy</span>
+            </div>
+          </div>
+          <button class="agent-btn" onclick="openModal('planner')"><span>👁️</span> Inspect Planner Dossier</button>
+        </div>
+
+        <!-- Explorer Agent -->
+        <div class="agent-card">
+          <div>
+            <div class="agent-header">
+              <div class="agent-icon agent-explorer">🧭</div>
+              <div>
+                <div class="agent-name">Explorer Agent</div>
+                <div class="agent-role">DOM & API Live Exploration SDET</div>
+              </div>
+            </div>
+            <div class="agent-body">
+              Interacts directly with the Spartan Web Application and Swagger REST API via Playwright MCP. Audits accessibility tree, selects resilient semantic locators, and tests API responses.
+            </div>
+            <div class="agent-tools">
+              <span class="tool-chip">playwright-mcp</span>
+              <span class="tool-chip">browser-agent</span>
+              <span class="tool-chip">accessibility-tree</span>
+              <span class="tool-chip">swagger-inspector</span>
+            </div>
+          </div>
+          <button class="agent-btn" onclick="openModal('explorer')"><span>👁️</span> Inspect Explorer Dossier</button>
+        </div>
+
+        <!-- Generator Agent -->
+        <div class="agent-card">
+          <div>
+            <div class="agent-header">
+              <div class="agent-icon agent-generator">⚡</div>
+              <div>
+                <div class="agent-name">Generator Agent</div>
+                <div class="agent-role">Code Synthesizer SDET</div>
+              </div>
+            </div>
+            <div class="agent-body">
+              Synthesizes production-ready Playwright TypeScript specs with custom fixtures (<code>pageFixtures.ts</code>), updates Page Objects in <code>pages/</code>, and enforces zero hardcoded sleeps.
+            </div>
+            <div class="agent-tools">
+              <span class="tool-chip">spec-writer</span>
+              <span class="tool-chip">pom-updater</span>
+              <span class="tool-chip">api-service-updater</span>
+              <span class="tool-chip">typecheck-runner</span>
+            </div>
+          </div>
+          <button class="agent-btn" onclick="openModal('generator')"><span>👁️</span> Inspect Generator Dossier</button>
+        </div>
+
+        <!-- Healer Agent -->
+        <div class="agent-card">
+          <div>
+            <div class="agent-header">
+              <div class="agent-icon agent-healer">🩺</div>
+              <div>
+                <div class="agent-name">Healer Agent</div>
+                <div class="agent-role">Failure Diagnosis & Autonomous Healing SDET</div>
+              </div>
+            </div>
+            <div class="agent-body">
+              Inspects failed test logs, traces, and screenshots. Classifies root cause into the 3-tier taxonomy, autonomously patches code defects, and re-executes tests to verify the fix.
+            </div>
+            <div class="agent-tools">
+              <span class="tool-chip">trace-inspector</span>
+              <span class="tool-chip">3-tier-classifier</span>
+              <span class="tool-chip">code-patcher</span>
+              <span class="tool-chip">playwright-runner</span>
+            </div>
+          </div>
+          <button class="agent-btn" onclick="openModal('healer')"><span>👁️</span> Inspect Healer Dossier</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 3: Jira & Azure DevOps MCP Integration -->
+    <section id="mcp">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🔗 Jira & Azure DevOps MCP Integration</h2>
+          <p class="section-desc">Test the live ingestion simulator: provide a story ID to see parsed ACs and test plan generation.</p>
+        </div>
+      </div>
+
+      <div class="mcp-container">
+        <div class="mcp-box">
+          <div class="mcp-title"><span>📥</span> Work Item Query Input</div>
+          <div class="input-row">
+            <input type="text" id="mcp-input-val" class="mcp-input" value="SPAR-101" placeholder="Enter Jira Key or Azure DevOps ID...">
+            <button class="mcp-run-btn" onclick="simulateMcpFetch()">Fetch Story</button>
+          </div>
+          <div style="font-size: 0.85rem; color: var(--text-muted); margin-bottom: 12px;">Quick Examples:</div>
+          <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+            <button class="agent-btn" style="width: auto; padding: 4px 10px; font-size: 0.75rem;" onclick="setMcpInput('SPAR-101')">SPAR-101 (Spartan Search UI)</button>
+            <button class="agent-btn" style="width: auto; padding: 4px 10px; font-size: 0.75rem;" onclick="setMcpInput('SPAR-204')">SPAR-204 (Add Spartan API)</button>
+            <button class="agent-btn" style="width: auto; padding: 4px 10px; font-size: 0.75rem;" onclick="setMcpInput('10423')">ADO-10423 (Delete Spartan E2E)</button>
+          </div>
+        </div>
+
+        <div class="mcp-box">
+          <div class="mcp-title"><span>📤</span> Extracted Requirements Payload</div>
+          <pre id="mcp-payload-preview" class="payload-display">{
+  "issueKey": "SPAR-101",
+  "title": "Search Spartans by Name and Gender Filter",
+  "type": "Story",
+  "layer": "UI Automation",
+  "acceptanceCriteria": [
+    "AC1: Searching by name substring filters table rows dynamically",
+    "AC2: Selecting gender dropdown filters records to matching gender only",
+    "AC3: Total count badge reflects exact number of matching filtered rows",
+    "AC4: Clicking Clear resets search fields and restores full table view"
+  ]
+}</pre>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 4: 1-to-1 AC Mapping Matrix -->
+    <section id="mapping">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">📊 1-to-1 Acceptance Criteria Traceability Matrix</h2>
+          <p class="section-desc">Strict architectural enforcement: each user story AC maps to an isolated, dedicated test scenario.</p>
+        </div>
+      </div>
+
+      <div style="background: var(--bg-card); border: 1px solid var(--border-subtle); border-radius: 14px; overflow-x: auto;">
+        <table class="custom-table">
+          <thead>
+            <tr>
+              <th>Acceptance Criterion</th>
+              <th>Target Test Scenario</th>
+              <th>Layer</th>
+              <th>POM / Service Component</th>
+              <th>Assertion Standard</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>AC1:</strong> Search name substring</td>
+              <td><code>test('AC1: should filter rows by name')</code></td>
+              <td><span class="stage-tag" style="background: rgba(59,130,246,0.2); color: #60a5fa;">UI POM</span></td>
+              <td><code>SpartanListPage.searchInput</code></td>
+              <td><code>await expect(row).toContainText(...)</code></td>
+            </tr>
+            <tr>
+              <td><strong>AC2:</strong> Filter by gender</td>
+              <td><code>test('AC2: should filter rows by gender')</code></td>
+              <td><span class="stage-tag" style="background: rgba(59,130,246,0.2); color: #60a5fa;">UI POM</span></td>
+              <td><code>SpartanListPage.genderSelect</code></td>
+              <td><code>await expect(rowCells).toHaveText(...)</code></td>
+            </tr>
+            <tr>
+              <td><strong>AC3:</strong> Total count display</td>
+              <td><code>test('AC3: should display total count badge')</code></td>
+              <td><span class="stage-tag" style="background: rgba(59,130,246,0.2); color: #60a5fa;">UI POM</span></td>
+              <td><code>SpartanListPage.filteredCountSpan</code></td>
+              <td><code>await expect(badge).toBeVisible()</code></td>
+            </tr>
+            <tr>
+              <td><strong>AC4:</strong> Clear button reset</td>
+              <td><code>test('AC4: should reset table on clear')</code></td>
+              <td><span class="stage-tag" style="background: rgba(59,130,246,0.2); color: #60a5fa;">UI POM</span></td>
+              <td><code>SpartanListPage.clearFilterButton</code></td>
+              <td><code>await expect(searchInput).toHaveValue('')</code></td>
+            </tr>
+            <tr>
+              <td><strong>AC5:</strong> Create via REST API</td>
+              <td><code>test('AC5: should create Spartan with 201')</code></td>
+              <td><span class="stage-tag" style="background: rgba(16,185,129,0.2); color: #34d399;">REST API</span></td>
+              <td><code>SpartanApiClient.createSpartan()</code></td>
+              <td><code>expect(res.status()).toBe(201)</code></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Section 5: 3-Tier Autonomous Healing Simulator -->
+    <section id="healing">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">🩺 3-Tier Failure Classification & Healing Simulator</h2>
+          <p class="section-desc">Experience how the Healer Agent diagnoses failures and autonomously patches code.</p>
+        </div>
+      </div>
+
+      <div class="healing-container">
+        <div class="tier-tabs">
+          <div class="tier-tab active" onclick="switchTier('code')">
+            <div class="tier-name">1. automation-code</div>
+            <span class="tier-badge badge-healable">AUTONOMOUSLY HEALABLE</span>
+          </div>
+          <div class="tier-tab" onclick="switchTier('data')">
+            <div class="tier-name">2. environment data</div>
+            <span class="tier-badge badge-nonhealable">HALT & LOG DISCREPANCY</span>
+          </div>
+          <div class="tier-tab" onclick="switchTier('defect')">
+            <div class="tier-name">3. product defect</div>
+            <span class="tier-badge badge-nonhealable">HALT & LOG BUG REPORT</span>
+          </div>
+        </div>
+
+        <div class="healing-content">
+          <div>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 8px; color: #cbd5e1;">Failure Diagnosis & Indicator</h4>
+            <div id="healing-diagnosis" style="font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 16px;">
+              <strong>Trigger:</strong> <code>TimeoutError: locator.click: Timeout 10000ms exceeded</code> on stale CSS selector <code>#filter-btn</code>.
+              <br><br>
+              <strong>Healer Analysis:</strong> DOM inspection reveals the button ID changed from <code>#filter-btn</code> to a semantic role: <code>page.getByRole('button', { name: 'Search' })</code>.
+            </div>
+            <div id="healing-action" style="font-size: 0.85rem; padding: 10px; border-radius: 6px; background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399;">
+              ✅ <strong>Action:</strong> Autonomous patch applied to <code>pages/SpartanListPage.ts</code>. Re-running test spec to verify fix.
+            </div>
+          </div>
+
+          <div>
+            <h4 style="font-family: var(--font-display); font-size: 1.1rem; margin-bottom: 8px; color: #cbd5e1;">Autonomous Code Patch Preview</h4>
+            <div id="healing-diff" class="code-diff">
+--- a/pages/SpartanListPage.ts
++++ b/pages/SpartanListPage.ts
+@@ -24,3 +24,3 @@
+<span class="diff-del">-    this.searchButton = page.locator('#filter-btn');</span>
+<span class="diff-add">+    this.searchButton = page.getByRole('button', { name: 'Search' });</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Section 6: Live Antigravity CLI Execution Simulator -->
+    <section id="cli">
+      <div class="section-header">
+        <div>
+          <h2 class="section-title">💻 Live Antigravity CLI Execution Runner</h2>
+          <p class="section-desc">Simulate running <code>/test-automation-lifecycle SPAR-101</code> through the Antigravity CLI.</p>
+        </div>
+        <button class="mcp-run-btn" onclick="runCliSimulation()">▶ Run Simulation</button>
+      </div>
+
+      <div class="terminal-window">
+        <div class="terminal-bar">
+          <span class="term-btn term-close"></span>
+          <span class="term-btn term-min"></span>
+          <span class="term-btn term-max"></span>
+          <span class="term-title">antigravity-cli — spartan-e2e-automation</span>
+        </div>
+        <div id="term-content" class="terminal-body">
+          <div><span class="term-prompt">user@macbook:~/spartan-e2e-automation $</span> <span class="term-cmd">agy</span></div>
+          <div style="color: #64748b;">Antigravity 2.0 CLI initialized. Active workspace: /Users/cydeo/Desktop/VS Code Projects/spartan-e2e-automation</div>
+          <div><span class="term-prompt">agy></span> <span class="term-cmd">/test-automation-lifecycle SPAR-101</span></div>
+          <div style="color: #94a3b8; margin-top: 8px;">Click "Run Simulation" above to execute the 9-stage orchestrator...</div>
+        </div>
+      </div>
+    </section>
+
+  </div>
+
+  <!-- Agent Dossier Modal -->
+  <div id="agent-modal" class="modal-backdrop" onclick="closeModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <button class="modal-close" onclick="closeModalDirect()">×</button>
+      <h2 id="modal-agent-title" style="font-family: var(--font-display); font-size: 1.6rem; color: var(--cyan-glow); margin-bottom: 8px;">Agent Dossier</h2>
+      <div id="modal-agent-role" style="font-size: 0.85rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 16px;">ROLE SPECIFICATION</div>
+      <div id="modal-agent-body" style="font-size: 0.95rem; color: #cbd5e1; line-height: 1.6;"></div>
+    </div>
+  </div>
+
+  <script>
+    // Stage Details
+    const stages = {
+      1: {
+        title: "Stage 1: Target Ingestion & Requirements Normalization",
+        desc: "The skill accepts a Jira issue key (e.g. SPAR-101) or Azure DevOps work item ID (e.g. 10423). It invokes Atlassian MCP or Azure DevOps MCP to extract the user story narrative and individual acceptance criteria (ACs). If MCP servers are offline, it accepts raw AC text directly.",
+        tools: "@modelcontextprotocol/server-atlassian, server-azure-devops",
+        output: "Parsed User Story Metadata & Acceptance Criteria List"
+      },
+      2: {
+        title: "Stage 2: Git Branch Isolation",
+        desc: "Verifies git status to ensure a clean working tree. Switches to main branch first and creates a dedicated, isolated branch (git checkout -B feature/<target-id>-automation main), guaranteeing tests begin from a verified baseline.",
+        tools: "Git CLI, GitHub MCP",
+        output: "Isolated Git Feature Branch (feature/SPAR-101-automation)"
+      },
+      3: {
+        title: "Stage 3: Planner Agent Invocation",
+        desc: "Analyzes the requirements, classifies layer scope (UI, REST API, or Hybrid E2E), enforces strict 1-to-1 AC-to-Test mapping, audits pages/ and services/ for reusable components, and defines the Faker data isolation strategy.",
+        tools: "planner.agent.md, pom-gap-analyzer, api-contract-analyzer",
+        output: "Structured Test Automation Plan & Mapping Matrix"
+      },
+      4: {
+        title: "Stage 4: Explorer Agent Invocation",
+        desc: "Connects to the live Spartan Web Application (/web/v2/spartans) and Swagger UI (/swagger-ui/index.html#/) using Playwright MCP and browser subagent. Audits live accessibility tree, verifies semantic locators, and tests API responses.",
+        tools: "explorer.agent.md, playwright-mcp, browser-subagent",
+        output: "Verified Semantic Locators & ResponseWrapper Contract Snapshots"
+      },
+      5: {
+        title: "Stage 5: Generator Agent Invocation",
+        desc: "Synthesizes type-safe Playwright test specs using custom fixtures (pageFixtures.ts), updates Page Objects in pages/ (strictly no assertions in POM), and adds REST API endpoints to SpartanApiClient.ts with web-first assertions.",
+        tools: "generator.agent.md, spec-writer, pom-updater",
+        output: "Production-grade tests/*.spec.ts, pages/*.ts, services/*.ts"
+      },
+      6: {
+        title: "Stage 6: Playwright Execution & Typecheck",
+        desc: "Runs npm run typecheck to guarantee zero TypeScript errors, followed by npx playwright test <target-spec> --project=chromium. Evaluates test results, duration, and generated artifacts in test-results/ and playwright-report/.",
+        tools: "Playwright Test Runner, TypeScript Compiler (tsc)",
+        output: "Test Execution Results & HTML Report"
+      },
+      7: {
+        title: "Stage 7: Autonomous Healing (Healer Agent)",
+        desc: "If any test fails, invokes the Healer Agent with error logs and failure traces. Classifies root cause into 3-tier taxonomy: automation-code (autonomously patches code and re-runs), environment data (logs discrepancy), or product defect (logs bug report).",
+        tools: "healer.agent.md, trace-inspector, code-patcher",
+        output: "Healed Code Patch or Formal Defect Report"
+      },
+      8: {
+        title: "Stage 8: Ephemeral Scratch Purge",
+        desc: "Upon 100% test pass verification across all scenarios, purges temporary scratch files and traces from .temp/, keeping the repository clean.",
+        tools: "Clean Runner",
+        output: "Clean Working Tree Ready for PR"
+      },
+      9: {
+        title: "Stage 9: PR Summary & Pull Request Creation",
+        desc: "Invokes the /pr-summary skill to analyze git diffs, AC coverage, and execution metrics. Synthesizes an executive PR description with a 1-to-1 AC checklist, and uses GitHub MCP to open a Pull Request ready for human review.",
+        tools: "pr-summary skill, GitHub MCP (create_pull_request)",
+        output: "Verified Pull Request opened on GitHub"
+      }
+    };
+
+    function showStage(num) {
+      document.querySelectorAll('.stage-card').forEach((card, idx) => {
+        card.classList.toggle('active', idx + 1 === num);
+      });
+      const data = stages[num];
+      document.getElementById('detail-title').innerText = data.title;
+      document.getElementById('detail-desc').innerText = data.desc;
+    }
+
+    // Modal Dossiers
+    const dossiers = {
+      planner: {
+        title: "Planner Agent (Test Automation Architect)",
+        role: "Lead Test Automation Architect & Planner",
+        content: `
+          <h4 style="color: var(--cyan-glow); margin-bottom: 6px;">Core Responsibilities:</h4>
+          <ul style="margin-left: 20px; margin-bottom: 16px;">
+            <li>Fetches user story requirements from Jira (Atlassian MCP) or Azure DevOps MCP.</li>
+            <li>Enforces <strong>1-to-1 AC Mapping</strong>: each acceptance criterion gets a dedicated <code>test('AC#: ...')</code> block.</li>
+            <li>Performs POM & Service Gap Analysis: audits <code>pages/</code> and <code>services/SpartanApiClient.ts</code> for existing vs new methods.</li>
+            <li>Designs dynamic data isolation strategy using <code>DataGenerator</code> (<code>@faker-js/faker</code>).</li>
+          </ul>
+          <h4 style="color: var(--cyan-glow); margin-bottom: 6px;">Strict Behavioral Rules:</h4>
+          <ul style="margin-left: 20px;">
+            <li>Never combine distinct acceptance criteria into one monolithic test.</li>
+            <li>Never hardcode static entity names or phone numbers.</li>
+            <li>Always enforce web-first retrying assertions plan.</li>
+          </ul>
+        `
+      },
+      explorer: {
+        title: "Explorer Agent (DOM & API Live Exploration)",
+        role: "Lead DOM & API Exploration SDET",
+        content: `
+          <h4 style="color: var(--cyan-glow); margin-bottom: 6px;">Core Responsibilities:</h4>
+          <ul style="margin-left: 20px; margin-bottom: 16px;">
+            <li>Connects to Spartan Web App and Swagger UI via Playwright MCP tools.</li>
+            <li>Captures live accessibility tree snapshot to discover accessible roles and names.</li>
+            <li>Validates user-facing locator hierarchy: <code>getByRole</code> > <code>getByLabel</code> > <code>getByPlaceholder</code> > <code>getByText</code> > ID fallback.</li>
+            <li>Verifies selector uniqueness: guarantees <code>count() === 1</code>.</li>
+            <li>Inspects backend REST endpoints, query parameters, and <code>ResponseWrapper</code> envelopes.</li>
+          </ul>
+          <h4 style="color: var(--cyan-glow); margin-bottom: 6px;">Strict Behavioral Rules:</h4>
+          <ul style="margin-left: 20px;">
+            <li>Absolute XPaths (<code>/html/body/...</code>) are strictly forbidden.</li>
+            <li>Never use brittle index slicing when a parent container scope is available.</li>
+          </ul>
+        `
+      },
+      generator: {
+        title: "Generator Agent (Code Synthesizer)",
+        role: "Senior Test Automation Code Synthesizer",
+        content: `
+          <h4 style="color: var(--cyan-glow); margin-bottom: 6px;">Core Responsibilities:</h4>
+          <ul style="margin-left: 20px; margin-bottom: 16px;">
+            <li>Writes Playwright TypeScript test specs with 1-to-1 AC mapping.</li>
+            <li>Injects custom fixtures from <code>../fixtures</code> (<code>pageFixtures.ts</code>).</li>
+            <li>Updates Page Objects in <code>pages/</code> extending <code>BasePage.ts</code>.</li>
+            <li>Adds REST API methods to <code>services/SpartanApiClient.ts</code>.</li>
+            <li>Enforces web-first assertions (<code>await expect(locator).toBeVisible()</code>).</li>
+          </ul>
+          <h4 style="color: var(--cyan-glow); margin-bottom: 6px;">Strict Behavioral Rules:</h4>
+          <ul style="margin-left: 20px;">
+            <li><strong>Zero assertions in Page Objects.</strong> Verification belongs in test spec files.</li>
+            <li><strong>Strict Zero-Sleep Policy:</strong> <code>waitForTimeout</code> and <code>setTimeout</code> are banned.</li>
+            <li>Must run <code>npm run typecheck</code> before signaling completion.</li>
+          </ul>
+        `
+      },
+      healer: {
+        title: "Healer Agent (Autonomous Healing SDET)",
+        role: "Senior Failure Diagnosis & Autonomous Healing SDET",
+        content: `
+          <h4 style="color: var(--cyan-glow); margin-bottom: 6px;">Core Responsibilities:</h4>
+          <ul style="margin-left: 20px; margin-bottom: 16px;">
+            <li>Inspects test failure stack traces, failure screenshots, and Playwright traces.</li>
+            <li>Classifies failures into the strict 3-tier taxonomy.</li>
+            <li>For <code>automation-code</code>: autonomously patches Page Objects or test specs and re-verifies.</li>
+            <li>For <code>environment data</code>: logs environment discrepancy and halts.</li>
+            <li>For <code>product defect</code>: logs formal bug report with reproduction steps and halts.</li>
+          </ul>
+          <h4 style="color: var(--cyan-glow); margin-bottom: 6px;">Strict Behavioral Rules:</h4>
+          <ul style="margin-left: 20px;">
+            <li>Never weaken assertions to make a failing test pass artificially.</li>
+            <li>Always re-run <code>npx playwright test</code> to verify the fix works.</li>
+          </ul>
+        `
+      }
+    };
+
+    function openModal(agentKey) {
+      const data = dossiers[agentKey];
+      document.getElementById('modal-agent-title').innerText = data.title;
+      document.getElementById('modal-agent-role').innerText = data.role;
+      document.getElementById('modal-agent-body').innerHTML = data.content;
+      document.getElementById('agent-modal').style.display = 'flex';
+    }
+
+    function closeModal(e) {
+      if (e.target.id === 'agent-modal') {
+        document.getElementById('agent-modal').style.display = 'none';
+      }
+    }
+
+    function closeModalDirect() {
+      document.getElementById('agent-modal').style.display = 'none';
+    }
+
+    // MCP Story Simulator
+    const stories = {
+      'SPAR-101': {
+        issueKey: "SPAR-101",
+        title: "Search Spartans by Name and Gender Filter",
+        type: "Story",
+        layer: "UI Automation",
+        acceptanceCriteria: [
+          "AC1: Searching by name substring filters table rows dynamically",
+          "AC2: Selecting gender dropdown filters records to matching gender only",
+          "AC3: Total count badge reflects exact number of matching filtered rows",
+          "AC4: Clicking Clear resets search fields and restores full table view"
+        ]
+      },
+      'SPAR-204': {
+        issueKey: "SPAR-204",
+        title: "Create Spartan REST API Endpoint Validation",
+        type: "Story",
+        layer: "REST API Automation",
+        acceptanceCriteria: [
+          "AC1: POST /api/v2/spartans with valid payload creates Spartan and returns 201 Created",
+          "AC2: Response body returns ResponseWrapper with totalElement 1 and generated ID",
+          "AC3: POST with empty name returns 400 Bad Request with ValidationExceptionWrapper",
+          "AC4: POST with phone < 10 digits returns 400 Bad Request with phone format message"
+        ]
+      },
+      '10423': {
+        issueKey: "10423",
+        title: "End-to-End Delete Spartan Flow & Backend Verification",
+        type: "Story",
+        layer: "Hybrid E2E Automation",
+        acceptanceCriteria: [
+          "AC1: Seed a Spartan via REST API POST /api/v2/spartans",
+          "AC2: Locate seeded Spartan in UI table and click Delete button",
+          "AC3: Accept confirmation dialog and verify row disappears from UI",
+          "AC4: Verify GET /api/v2/spartans/{id} returns 404 Not Found in backend"
+        ]
+      }
+    };
+
+    function setMcpInput(key) {
+      document.getElementById('mcp-input-val').value = key;
+      simulateMcpFetch();
+    }
+
+    function simulateMcpFetch() {
+      const key = document.getElementById('mcp-input-val').value.trim();
+      const story = stories[key] || {
+        issueKey: key,
+        title: `Automate Requirements for ${key}`,
+        type: "Custom Work Item",
+        layer: "UI / API Automation",
+        acceptanceCriteria: [
+          "AC1: Verify primary action workflow succeeds",
+          "AC2: Verify negative validation error messages display as expected"
+        ]
+      };
+      document.getElementById('mcp-payload-preview').innerText = JSON.stringify(story, null, 2);
+    }
+
+    // 3-Tier Healing Simulator
+    const healingTiers = {
+      code: {
+        diagnosis: `<strong>Trigger:</strong> <code>TimeoutError: locator.click: Timeout 10000ms exceeded</code> on stale CSS selector <code>#filter-btn</code>.<br><br><strong>Healer Analysis:</strong> DOM inspection reveals button ID changed from <code>#filter-btn</code> to semantic role: <code>page.getByRole('button', { name: 'Search' })</code>.`,
+        action: `✅ <strong>Action:</strong> Autonomous patch applied to <code>pages/SpartanListPage.ts</code>. Re-running test spec to verify fix.`,
+        actionClass: `background: rgba(16, 185, 129, 0.1); border: 1px solid rgba(16, 185, 129, 0.3); color: #34d399;`,
+        diff: `--- a/pages/SpartanListPage.ts\n+++ b/pages/SpartanListPage.ts\n@@ -24,3 +24,3 @@\n<span class="diff-del">-    this.searchButton = page.locator('#filter-btn');</span>\n<span class="diff-add">+    this.searchButton = page.getByRole('button', { name: 'Search' });</span>`
+      },
+      data: {
+        diagnosis: `<strong>Trigger:</strong> <code>AssertionError: Expected 200 OK but received 500 Internal Server Error</code>.<br><br><strong>Healer Analysis:</strong> Database server connection timed out on backend Render instance. Application code is correct.`,
+        action: `⚠️ <strong>Action:</strong> HALT HEALING. Code is not modified to mask environment outage. Logged Environment Discrepancy Alert.`,
+        actionClass: `background: rgba(245, 158, 11, 0.1); border: 1px solid rgba(245, 158, 11, 0.3); color: #fbbf24;`,
+        diff: `[ENVIRONMENT DISCREPANCY REPORT]\n- Endpoint: POST /api/v2/spartans\n- Status: 500 INTERNAL_SERVER_ERROR\n- Reason: Database connection pool exhausted\n- Recommendation: Verify Render DB instance health`
+      },
+      defect: {
+        diagnosis: `<strong>Trigger:</strong> <code>AssertionError: Expected button to be disabled, received enabled</code>.<br><br><strong>Healer Analysis:</strong> User Story AC explicitly specifies: "Submit button must remain disabled when required fields are empty". The UI allows submitting blank inputs.`,
+        action: `🚨 <strong>Action:</strong> HALT HEALING. Confirmed Product Defect. Logged formal Bug Report with reproduction steps and screenshot.`,
+        actionClass: `background: rgba(244, 63, 94, 0.1); border: 1px solid rgba(244, 63, 94, 0.3); color: #fb7185;`,
+        diff: `[BUG REPORT: SPAR-DEF-04]\n- Severity: High\n- Component: Add Spartan Form\n- Expected: Submit button disabled on blank form\n- Actual: Submit button is enabled and clickable\n- Screenshot: test-results/validation-defect.png`
+      }
+    };
+
+    function switchTier(tierKey) {
+      document.querySelectorAll('.tier-tab').forEach((tab, idx) => {
+        const keys = ['code', 'data', 'defect'];
+        tab.classList.toggle('active', keys[idx] === tierKey);
+      });
+      const data = healingTiers[tierKey];
+      document.getElementById('healing-diagnosis').innerHTML = data.diagnosis;
+      const actEl = document.getElementById('healing-action');
+      actEl.innerHTML = data.action;
+      actEl.style.cssText = `font-size: 0.85rem; padding: 10px; border-radius: 6px; ${data.actionClass}`;
+      document.getElementById('healing-diff').innerHTML = data.diff;
+    }
+
+    // CLI Simulation Runner
+    function runCliSimulation() {
+      const term = document.getElementById('term-content');
+      term.innerHTML = `
+        <div><span class="term-prompt">agy></span> <span class="term-cmd">/test-automation-lifecycle SPAR-101</span></div>
+      `;
+
+      const logs = [
+        { text: "⏳ [Stage 1] Ingesting SPAR-101 via Atlassian MCP...", delay: 400, color: "term-info" },
+        { text: "  ✓ Story retrieved: Search Spartans by Name and Gender Filter", delay: 700, color: "term-success" },
+        { text: "  ✓ 4 Acceptance Criteria parsed (AC1, AC2, AC3, AC4)", delay: 900, color: "term-success" },
+        { text: "⏳ [Stage 2] Creating git branch 'feature/SPAR-101-automation' from main...", delay: 1300, color: "term-info" },
+        { text: "  ✓ Switched to clean branch feature/SPAR-101-automation", delay: 1600, color: "term-success" },
+        { text: "🤖 [Stage 3] Planner Agent invoking 1-to-1 AC mapping...", delay: 2000, color: "term-info" },
+        { text: "  ✓ AC1-AC4 mapped to tests/spartan-search.spec.ts", delay: 2400, color: "term-success" },
+        { text: "  ✓ POM gap analysis: searchInput and filteredCountSpan verified", delay: 2700, color: "term-success" },
+        { text: "🧭 [Stage 4] Explorer Agent auditing live DOM via Playwright MCP...", delay: 3100, color: "term-info" },
+        { text: "  ✓ Semantic role selectors validated (getByPlaceholder, getByRole)", delay: 3500, color: "term-success" },
+        { text: "⚡ [Stage 5] Generator Agent synthesizing test specs & Page Objects...", delay: 3900, color: "term-info" },
+        { text: "  ✓ tests/spartan-search.spec.ts generated with custom fixtures", delay: 4300, color: "term-success" },
+        { text: "  ✓ npm run typecheck: 0 TypeScript errors", delay: 4700, color: "term-success" },
+        { text: "🎭 [Stage 6] Executing Playwright test suite...", delay: 5100, color: "term-info" },
+        { text: "  ✓ 4 passed in 2.1s (100% PASS)", delay: 5800, color: "term-success" },
+        { text: "🧹 [Stage 8] Ephemeral scratch (.temp/) purged.", delay: 6200, color: "term-info" },
+        { text: "🚀 [Stage 9] Invoking /pr-summary skill via GitHub MCP...", delay: 6600, color: "term-info" },
+        { text: "  ✓ Pull Request #28 opened: feat(automation): implement and verify [SPAR-101]", delay: 7200, color: "term-success" },
+        { text: "==========================================================", delay: 7500, color: "term-cmd" },
+        { text: "🎉 Test Automation Lifecycle complete for SPAR-101!", delay: 7700, color: "term-success" }
+      ];
+
+      logs.forEach(item => {
+        setTimeout(() => {
+          const div = document.createElement('div');
+          div.className = item.color;
+          div.innerText = item.text;
+          term.appendChild(div);
+          term.scrollTop = term.scrollHeight;
+        }, item.delay);
+      });
+    }
+  </script>
+</body>
+</html>

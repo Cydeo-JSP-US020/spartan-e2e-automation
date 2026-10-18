@@ -1,0 +1,39 @@
+{
+  "name": "spartan-e2e-automation",
+  "version": "1.0.0",
+  "description": "Enterprise-grade Playwright UI Test Automation Framework with TypeScript and Page Object Model for the Spartan Application",
+  "main": "index.js",
+  "scripts": {
+    "test": "npx playwright test --project=chromium",
+    "test:all-browsers": "npx playwright test",
+    "test:headed": "npx playwright test --project=chromium --headed",
+    "test:ui": "npx playwright test --ui",
+    "test:debug": "npx playwright test --debug",
+    "test:crud": "npx playwright test tests/spartan-crud.spec.ts",
+    "test:validation": "npx playwright test tests/spartan-validation.spec.ts",
+    "test:list": "npx playwright test tests/spartan-list.spec.ts",
+    "test:api": "npx playwright test tests/api/ --project=chromium",
+    "test:api:crud": "npx playwright test tests/api/spartan-api-crud.spec.ts --project=chromium",
+    "test:api:search": "npx playwright test tests/api/spartan-api-search.spec.ts --project=chromium",
+    "test:api:validation": "npx playwright test tests/api/spartan-api-validation.spec.ts --project=chromium",
+    "report": "npx playwright show-report",
+    "typecheck": "tsc --noEmit"
+  },
+  "keywords": [
+    "playwright",
+    "typescript",
+    "pom",
+    "e2e",
+    "test-automation",
+    "spartan"
+  ],
+  "author": "Cydeo",
+  "license": "ISC",
+  "devDependencies": {
+    "@faker-js/faker": "^10.6.0",
+    "@playwright/test": "^1.49.0",
+    "@types/node": "^22.0.0",
+    "dotenv": "^16.4.5",
+    "typescript": "^5.6.0"
+  }
+}
